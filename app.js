@@ -1,14 +1,24 @@
 const express = require('express')
+const exphbs = require('express-handlebars')
 const app = express()
+
+// handlebars middleware
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main'
+})) // copied this code from the handlebars installation website
+app.set('view engine', 'handlebars')// just saying we want to use the handlebars template engine.
 
 // index route
 app.get('/', (req, res) => {
-  res.send('HELLO')
+  const title = 'Welcome HA!'
+  res.render('index', {
+    title: title
+  })
 }) // basically the home url// also using es6 arrow function
 
 // about route
 app.get('/about', (req, res) => { // using es6 syntax (function)
-  res.send('About999') // so you type localhost:5000/about and it will go to this page
+  res.render('about') // so you type localhost:5000/about and it will go to this page
   // and it will render on the browser About. Or what ever you put in the parens
 })
 
