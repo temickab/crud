@@ -1,6 +1,19 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
+const mongoose = require('mongoose')
+
 const app = express()
+// map global promise - gets rid of warning
+mongoose.Promise = global.Promise
+// to connect to mongoose
+mongoose.connect('mongodb://localhost/vidjot-dev')
+.then(() => console.log('MongoDB Connected..'))
+.catch(err => console.log(err))
+// useMongoClient option is no longer necessary in mongoose 5.x
+
+// load Idea model
+require('./models/Idea') // requiring the schema model
+const Idea = mongoose.model('ideas')
 
 // handlebars middleware
 app.engine('handlebars', exphbs({
