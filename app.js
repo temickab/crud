@@ -35,6 +35,11 @@ app.get('/about', (req, res) => { // using es6 syntax (function)
   // and it will render on the browser About. Or what ever you put in the parens
 })
 
+// adding Idea Form
+app.get('/ideas/add', (req, res) => {
+  res.render('ideas/add')
+})
+
 const port = 5000
 
 app.listen(port, () => {
