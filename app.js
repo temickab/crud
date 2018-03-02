@@ -40,6 +40,17 @@ app.get('/about', (req, res) => { // using es6 syntax (function)
   // and it will render on the browser About. Or what ever you put in the parens
 })
 
+// Idea Index Page
+app.get('/ideas', (req, res) => {
+  Idea.find({})
+  .sort({date: 'desc'})
+    .then(ideas => {
+      res.render('ideas/index', {
+        ideas: ideas
+      })
+    })
+})
+
 // adding Idea Form
 app.get('/ideas/add', (req, res) => {
   res.render('ideas/add')
