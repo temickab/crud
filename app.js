@@ -1,6 +1,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 
 const app = express()
 // map global promise - gets rid of warning
@@ -21,6 +22,10 @@ app.engine('handlebars', exphbs({
 })) // copied this code from the handlebars installation website
 app.set('view engine', 'handlebars')// just saying we want to use the handlebars template engine.
 
+// adding the body parser middleware for post request.
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
+
 // index route
 app.get('/', (req, res) => {
   const title = 'Welcome HA!'
@@ -38,6 +43,12 @@ app.get('/about', (req, res) => { // using es6 syntax (function)
 // adding Idea Form
 app.get('/ideas/add', (req, res) => {
   res.render('ideas/add')
+})
+
+// to process the .. the post request when someone wants to add something
+app.post('/ideas', (req, res) => { // will need the body-parser for this
+  console.log(req.body)
+  res.send('ok')
 })
 
 const port = 5000
