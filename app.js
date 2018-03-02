@@ -47,8 +47,24 @@ app.get('/ideas/add', (req, res) => {
 
 // to process the .. the post request when someone wants to add something
 app.post('/ideas', (req, res) => { // will need the body-parser for this
-  console.log(req.body)
-  res.send('ok')
+  let erros = []
+
+  if (!req.body.title) { // for the title
+    errors.push({text: 'Please add a title'})
+  }
+  if (!req.body.details) { // for the details
+    errors.push({text: 'Please add details'})
+  }
+
+  if (errors.length > 0) {
+    res.render('ideas/add', {
+      errors: errors,
+      title: req.body.title,
+      details: req.body.details
+    })
+  } else {
+    res.send('passed')
+  }
 })
 
 const port = 5000
