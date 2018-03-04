@@ -13,6 +13,8 @@ mongoose.connect('mongodb://localhost/vidjot-dev')
 .catch(err => console.log(err))
 // useMongoClient option is no longer necessary in mongoose 5.x
 
+app.use('/assets', express.static('public'))
+
 // load Idea model
 require('./models/Idea') // requiring the schema model
 const Idea = mongoose.model('ideas')
