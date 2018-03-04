@@ -56,6 +56,18 @@ app.get('/ideas/add', (req, res) => {
   res.render('ideas/add')
 })
 
+// edit Idea Form... a GET request
+app.get('/ideas/edit/:id', (req, res) => {
+  Idea.findOne({
+    _id: req.params.id
+  })
+    .then(idea => {
+      res.render('ideas/edit', {
+        idea: idea
+      })
+    })
+})
+
 // to process the .. the post request when someone wants to add something
 app.post('/ideas', (req, res) => { // will need the body-parser for this
   let errors = []
