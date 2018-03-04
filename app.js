@@ -2,6 +2,7 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 
 const app = express()
 // map global promise - gets rid of warning
@@ -25,6 +26,8 @@ app.set('view engine', 'handlebars')// just saying we want to use the handlebars
 // adding the body parser middleware for post request.
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
+// in order for method override to work (middleware)
+app.use(methodOverride('_method'))
 
 // index route
 app.get('/', (req, res) => {
@@ -96,6 +99,23 @@ app.post('/ideas', (req, res) => { // will need the body-parser for this
       res.redirect('/ideas')
     })
   }
+})
+
+// Edit form Process.. This is a Put Request
+app.put('/ideas/:id', (req, res) => {
+  Idea.findOne({
+    _id: req.params.id
+  })
+  .then(idea => {
+      // new values
+    idea.title = req.body.title
+    idea.details = req.body.details
+
+    idea.save()
+      .then(idea => {
+        res.redirect('/ideas')
+      })
+  })
 })
 
 const port = 5000
