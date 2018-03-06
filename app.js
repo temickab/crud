@@ -13,7 +13,7 @@ mongoose.connect('mongodb://localhost/vidjot-dev')
 .catch(err => console.log(err))
 // useMongoClient option is no longer necessary in mongoose 5.x
 
-app.use('/assets', express.static('public'))
+app.use('/assets', express.static('public'))// for css styling
 
 // load Idea model
 require('./models/Idea') // requiring the schema model
@@ -33,7 +33,7 @@ app.use(methodOverride('_method'))
 
 // index route
 app.get('/', (req, res) => {
-  const title = 'Welcome HA!'
+  const title = 'Cool Videos'
   res.render('index', {
     title: title
   })
